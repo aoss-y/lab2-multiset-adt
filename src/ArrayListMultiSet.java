@@ -12,7 +12,7 @@ public class ArrayListMultiSet extends MultiSet {
      */
     @Override
     void add(int item) {
-
+        this.lst.add(item);
     }
 
     /**
@@ -23,7 +23,14 @@ public class ArrayListMultiSet extends MultiSet {
      */
     @Override
     void remove(int item) {
+        if (!this.lst.contains(item)) return;
 
+        for (int i = 0; i < this.lst.size(); ++i) {
+            if (this.lst.get(i) == item) {
+                this.lst.remove(i);
+                return; // Copying the behaviour from the .py file, this should only remove a single item at a time.
+            }
+        }
     }
 
     /**
@@ -34,7 +41,7 @@ public class ArrayListMultiSet extends MultiSet {
      */
     @Override
     boolean contains(int item) {
-        return false;
+        return this.lst.contains(item);
     }
 
     /**
@@ -42,7 +49,7 @@ public class ArrayListMultiSet extends MultiSet {
      */
     @Override
     boolean isEmpty() {
-        return false;
+        return this.lst.isEmpty();
     }
 
     /**
@@ -53,7 +60,11 @@ public class ArrayListMultiSet extends MultiSet {
      */
     @Override
     int count(int item) {
-        return -1;
+        int c = 0;
+        for (int x : this.lst) {
+            if (x == item) c++;
+        }
+        return c;
     }
 
     /**
@@ -61,6 +72,6 @@ public class ArrayListMultiSet extends MultiSet {
      */
     @Override
     int size() {
-        return -1;
+        return this.lst.size();
     }
 }

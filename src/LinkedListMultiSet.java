@@ -25,23 +25,52 @@ public class LinkedListMultiSet extends MultiSet {
     }
 
     public void remove(int item) {
-
+        Node cur = this.front;
+        Node prev = null;
+        while (cur != null) {
+            if (cur.item == item) {
+                this.size -= 1;
+                if (prev != null) {
+                    prev.next = cur.next;
+                }
+                else {
+                    this.front = cur.next;
+                }
+                return;
+            }
+            prev = cur;
+            cur = cur.next;
+        }
     }
 
     public boolean contains(int item) {
+        Node cur = this.front;
+        while (cur != null) {
+            if (cur.item == item) {
+                return true;
+            }
+            cur = cur.next;
+        }
         return false;
     }
 
     public boolean isEmpty() {
-        return false;
+        return this.front == null;
     }
 
-
     public int count(int item) {
-        return -1;
+        int numSeen = 0;
+        Node cur = this.front;
+        while (cur != null) {
+            if (cur.item == item) {
+                numSeen += 1;
+            }
+            cur = cur.next;
+        }
+        return numSeen;
     }
 
     public int size() {
-        return -1;
+        return this.size;
     }
 }

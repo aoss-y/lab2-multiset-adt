@@ -21,7 +21,7 @@ public class TreeMultiSet extends MultiSet {
      */
     @Override
     void remove(int item) {
-        this.root.delete_item(item);
+        this.root.deleteItem(item);
     }
 
     /**

@@ -3,13 +3,6 @@ import java.util.List;
 import java.util.Random;
 
 public class Tree {
-    // We recommend attempting this class last, as it hasn't been scaffolded for your team.
-    // Even if your team doesn't have time to implement this class, it is a useful exercise
-    // to think about how you might split up the work to get the Tree and TreeMultiSet
-    // implemented.
-
-    // TODO: Consult team on naming scheme (I'm using whatever convention there is for Java)
-
     private Integer root; // Could be null.
     private List<Tree> subtrees; // Always valid.
 
@@ -38,13 +31,13 @@ public class Tree {
         return this.root == null;
     }
 
-    public int size() {
+    public int len() {
         if (this.isEmpty()) return 0;
         if (this.subtrees.isEmpty()) return 1;
 
         int count = 1;
         for (Tree t : this.subtrees) 
-            count += t.size();
+            count += t.len();
 
         return count;
     }
@@ -140,7 +133,7 @@ public class Tree {
         return out;
     }
 
-    public boolean remove(int item) {
+    public boolean deleteItem(int item) {
         if (this.isEmpty()) return false;
         if (this.root == item) {
             this.deleteRoot();
@@ -148,7 +141,7 @@ public class Tree {
         }
 
         for (Tree t : this.subtrees) {
-            boolean deleted = t.remove(item);
+            boolean deleted = t.deleteItem(item);
             if (deleted && t.isEmpty()) {
                 this.subtrees.remove(t);
                 return true;
@@ -171,7 +164,7 @@ public class Tree {
         this.subtrees.addAll(chosenSubtree.subtrees);
     }
 
-    public void add(int item) {
+    public void insert(int item) {
         if (this.isEmpty()) { 
             this.root = item; 
             return;
@@ -186,11 +179,11 @@ public class Tree {
             this.subtrees.add(new Tree(item, new Tree[0]));
         } else {
             int ridx = rand.nextInt(this.subtrees.size());
-            this.subtrees.get(ridx).add(item);
+            this.subtrees.get(ridx).insert(item);
         }
     }
 
-    public boolean add(int child, int parent) {
+    public boolean insertChild(int child, int parent) {
         if (this.isEmpty()) return false;
         if (this.root == parent) {
             this.subtrees.add(new Tree(child, new Tree[0]));
@@ -198,7 +191,7 @@ public class Tree {
         }
 
         for (Tree t : this.subtrees) {
-            if (t.add(child, parent)) return true;
+            if (t.insertChild(child, parent)) return true;
         }
         return false;
     }
